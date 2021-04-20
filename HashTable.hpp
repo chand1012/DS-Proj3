@@ -12,6 +12,7 @@ class HashTable {
             int value;
         };
         int hashKey(string);
+        size_t rows = 0;
         // stores table info
         vector<vector<HashNode>> table;
     public:
@@ -25,9 +26,9 @@ class HashTable {
         bool remove(string);
         int get(string);
         size_t size();
-        // number of values for a given key
-        size_t size(string);
+        // number of values for a given hash
+        size_t size(int);
         bool isEmpty();
-        // is key populated?
-        bool isEmpty(string);
+        // is hash populated?
+        bool isEmpty(int);
 };

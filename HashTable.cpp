@@ -32,6 +32,7 @@ void HashTable::add(string key, int value) {
 
     vector<HashNode>& values = table.at(hash);
     values.push_back(temp);
+    ++rows;
 }
 
 bool HashTable::remove(string key) {
@@ -42,6 +43,7 @@ bool HashTable::remove(string key) {
         HashNode temp = *it;
         if (temp.key == key) {
             values.erase(it);
+            --rows;
             return true;
         }
     }
@@ -65,12 +67,11 @@ int HashTable::get(string key) {
 }
 
 size_t HashTable::size() {
-    return table.size();
+    return rows;
 }
 
-size_t HashTable::size(string key) {
-    int position = hashKey(key);
-    vector<HashNode>& values = table.at(position);
+size_t HashTable::size(int hash) {
+    vector<HashNode>& values = table.at(hash);
     return values.size();
 }
 
@@ -78,8 +79,7 @@ bool HashTable::isEmpty() {
     return table.empty();
 }
 
-bool HashTable::isEmpty(string key) {
-    int position = hashKey(key);
-    vector<HashNode>& values = table.at(position);
+bool HashTable::isEmpty(int hash) {
+    vector<HashNode>& values = table.at(hash);
     return values.empty();
 }
