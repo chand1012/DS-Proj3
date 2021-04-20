@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 if (MSVC)
     add_compile_options(/W4)
-    add_compile_options(/O2)
+    add_compile_options(/Ot)
 else()
     add_compile_options(-Wall)
     add_compile_options(-O3)
