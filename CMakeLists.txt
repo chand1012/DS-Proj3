@@ -16,4 +16,8 @@ endif()
 
 add_executable(main main.cpp)
 
+add_library(HashTable HashTable.cpp HashTable.hpp)
+
+target_link_libraries(main HashTable)
+
 add_custom_target(run $<TARGET_FILE:main>)

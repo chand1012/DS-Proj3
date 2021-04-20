@@ -15,6 +15,7 @@ class HashTable {
         // stores table info
         vector<vector<HashNode>> table;
     public:
+        HashTable(int);
         HashTable();
         ~HashTable();
         // keys are strings

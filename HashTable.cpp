@@ -10,6 +10,10 @@ int HashTable::hashKey(string key) {
 }
 
 // public functions
+HashTable::HashTable(int init_size) {
+    table.resize(init_size);
+}
+
 HashTable::HashTable() {}
 
 HashTable::~HashTable() {}
@@ -19,6 +23,13 @@ void HashTable::add(string key, int value) {
     temp.key = key;
     temp.value = value;
     int hash = hashKey(key);
+
+    int current_size = int(size());
+
+    if (current_size < hash) {
+        table.resize(hash * 2);
+    }
+
     vector<HashNode>& values = table.at(hash);
     values.push_back(temp);
 }
