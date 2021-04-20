@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <cstdlib>
+#include <ctime>
 
 #include "HashTable.hpp"
 #include "helpers.hpp"
