@@ -19,3 +19,7 @@ string randString(int length, string charset) {
 
     return temp;
 }
+
+int randint(int start, int end) {
+    return (rand() % (end - start + 1)) + start;
+}
