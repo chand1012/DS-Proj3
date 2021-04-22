@@ -20,16 +20,13 @@ add_executable(hashtabletest HashTableTest.cpp)
 # library definition
 add_library(HashTable HashTable.cpp HashTable.hpp)
 add_library(helpers helpers.cpp helpers.hpp)
-if(EXISTS Hopscotch.h)
-    add_library(Hopscotch Hopscotch.h Hopscotch.cpp)
-endif()
+add_library(Hopscotch Hopscotch.h Hopscotch.cpp)
 
 # link libraries to executable 
 target_link_libraries(main HashTable)
 target_link_libraries(main helpers)
-if (EXISTS Hopscotch.h)
-    target_link_libraries(main Hopscotch)
-endif()
+target_link_libraries(main Hopscotch)
+
 target_link_libraries(hashtabletest HashTable)
 target_link_libraries(hashtabletest helpers)
 

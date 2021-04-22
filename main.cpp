@@ -11,6 +11,8 @@
 #include "HashTable.hpp"
 #include "helpers.hpp"
 
+#include "Hopscotch.h"
+
 using namespace std;
 
 /*
@@ -29,16 +31,24 @@ int main() {
     int rnd;
     string tempStr;
     vector<string> randomStrings;
+    vector<int> randomValues;
     ofstream output("Results.csv");
+    // for HashTable
     stringstream add;
     stringstream get;
     stringstream remove;
+    // for HopHash
+    stringstream insert;
+    stringstream search;
+    stringstream deleteh;
+
 
     add << "Array Hash Table Add,";
     get << "Array Hash Table Get,";
     remove << "Array Hash Table Remove,";
-
-
+    insert << "HopHash Table Insert,";
+    search << "HopHash Table Search,";
+    deleteh << "HopHash Table Delete,";
 
     output << "Test Name,10,100,1000,10000,100000" << endl;
 
@@ -50,6 +60,7 @@ int main() {
         rnd = randint(2, 100);
         tempStr = randString(rnd);
         randomStrings.push_back(tempStr);
+        randomValues.push_back(randint(0, 9999999));
         if (i % 2000 == 0) {
             cout << '.';
         }
@@ -59,49 +70,79 @@ int main() {
     cout << "Starting test." << endl;
     for (int i = 0; i < 5; ++i) {
         HashTable test;
-        vector<string> testStrings;
         iteration = iterations[i];
         cout << "Running tests for " << iteration << " iterations." << endl;
+        cout << "Running HashTable Add test." << endl;
+        auto start = chrono::high_resolution_clock::now();
         for (int j = 0; j < iteration; ++j) {
-            rnd = randint(0, 99999);
-            testStrings.push_back(randomStrings[rnd]);
+            test.add(randomStrings[j], randomValues[j]);
         }
-        cout << "Running add test." << endl;
-        auto start = std::chrono::high_resolution_clock::now();
-        for (auto it = testStrings.begin(); it != testStrings.end(); ++it) {
-            test.add(*it, randint(0, 9999999));
-        }
-        auto end = std::chrono::high_resolution_clock::now();
-        auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+        auto end = chrono::high_resolution_clock::now();
+        auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
         add << duration.count() << ",";
         cout << "Done." << endl;
-        cout << "Running get tests." << endl;
-        start = std::chrono::high_resolution_clock::now();
+        cout << "Running HashTable Get tests." << endl;
+        start = chrono::high_resolution_clock::now();
         for (int j = 0; j < iteration/2; ++j) {
             rnd = randint(0, iteration-1);
-            tempStr = test.get(testStrings[rnd]);
+            test.get(randomStrings[rnd]);
         }
-        end = std::chrono::high_resolution_clock::now();
-        duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+        end = chrono::high_resolution_clock::now();
+        duration = chrono::duration_cast<chrono::microseconds>(end - start);
         get << duration.count() << ",";
         cout << "Done." << endl;
-        cout << "Running remove tests." << endl;
-        start = std::chrono::high_resolution_clock::now();
+        cout << "Running HashTable Remove tests." << endl;
+        start = chrono::high_resolution_clock::now();
         for (int j = 0; j < iteration/2; ++j) {
             rnd = randint(0, iteration-1);
-            tempStr = test.remove(testStrings[rnd]);
+            test.remove(randomStrings[rnd]);
         }
-        end = std::chrono::high_resolution_clock::now();
-        duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+        end = chrono::high_resolution_clock::now();
+        duration = chrono::duration_cast<chrono::microseconds>(end - start);
         remove << duration.count() << ",";
         cout << "Done." << endl;
+        // if other test file is included
+        // Hopscotch.h was modified to have
+        // 100,000 bucket placements and distance of 20
+        #ifdef HOPSCOTCH_H
+        HopHash hoptest;
+        cout << "Running Hopscotch insert tests." << endl;
+        start = chrono::high_resolution_clock::now();
+        for (int j = 0; j < iteration; ++j) {
+            hoptest.insertHop(randomValues[j]);
+        }
+        end = chrono::high_resolution_clock::now();
+        duration = chrono::duration_cast<chrono::microseconds>(end - start);
+        insert << duration.count() << ',';
+        cout << "Done." << endl;
+        cout << "Running Hopscotch search tests." << endl;
+        start = chrono::high_resolution_clock::now();
+        for (int j = 0; j < iteration; ++j) {
+            rnd = randint(0, iteration-1);
+            hoptest.searchHash(randomValues[rnd]);
+        }
+        end = chrono::high_resolution_clock::now();
+        duration = chrono::duration_cast<chrono::microseconds>(end - start);
+        search << duration.count() << ',';
+        start = chrono::high_resolution_clock::now();
+        for (int j = 0; j < iteration; ++j) {
+            rnd = randint(0, iteration-1);
+            hoptest.deleteHash(randomValues[rnd]);
+        }
+        end = chrono::high_resolution_clock::now();
+        duration = chrono::duration_cast<chrono::microseconds>(end - start);
+        deleteh << duration.count() << ',';
+        #endif
         cout << "Finished all tests for " << iteration << " iterations." << endl;
-        cout << std::setfill('-') << std::setw(19) << '-' << endl;
+        cout << setfill('-') << setw(25) << '-' << endl;
     }
 
     output << add.str() << endl;
     output << get.str() << endl;
     output << remove.str() << endl;
+    output << insert.str() << endl;
+    output << search.str() << endl;
+    output << deleteh.str() << endl;
 
     output.close();
 
