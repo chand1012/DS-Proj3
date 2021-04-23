@@ -20,14 +20,14 @@ add_executable(hashtabletest HashTableTest.cpp)
 # library definition
 add_library(HashTable HashTable.cpp HashTable.hpp)
 add_library(helpers helpers.cpp helpers.hpp)
-if (EXISTS Hopscotch.h) 
+if (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/Hopscotch.h) 
     add_library(Hopscotch Hopscotch.h Hopscotch.cpp)
 endif()
 
 # link libraries to executable 
 target_link_libraries(main HashTable)
 target_link_libraries(main helpers)
-if (EXISTS Hopscotch.h) 
+if (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/Hopscotch.h) 
     target_link_libraries(main Hopscotch)
 endif()
 target_link_libraries(hashtabletest HashTable)

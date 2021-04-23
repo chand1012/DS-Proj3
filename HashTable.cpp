@@ -6,7 +6,13 @@
 int HashTable::hashKey(string key) {
     // hash function is just the length
     // of the string as an integer
-    return int(key.size());
+    int hash = 0;
+    int temp;
+    for (int i = 0; i < key.size(); ++i) {
+        temp = static_cast<unsigned char>(key.at(i));
+        hash += temp;
+    }
+    return hash;
 }
 
 // public functions
@@ -27,16 +33,21 @@ void HashTable::add(string key, int value) {
     int current_size = int(size());
 
     if (current_size < hash) {
-        table.resize(hash * 2);
+        rows = hash + 1;
+        table.resize(rows);
     }
 
     vector<HashNode>& values = table.at(hash);
     values.push_back(temp);
-    ++rows;
 }
 
 bool HashTable::remove(string key) {
     int hash = hashKey(key);
+
+    if (hash > rows) {
+        return std::numeric_limits<int>::min();
+    }
+    
     vector<HashNode>& values = table.at(hash);
 
     for (auto it = values.begin(); it != values.end(); ++it) {
@@ -54,6 +65,11 @@ bool HashTable::remove(string key) {
 // gets value. Returns numeric min if not found
 int HashTable::get(string key) {
     int hash = hashKey(key);
+
+    if (hash > rows) {
+        return std::numeric_limits<int>::min();
+    }
+
     vector<HashNode>& values = table.at(hash);
 
     for (auto it = values.begin(); it != values.end(); ++it) {

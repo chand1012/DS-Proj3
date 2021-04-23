@@ -26,13 +26,17 @@ int main() {
 
     srand(time(NULL));
 
+    #ifdef HOPSCOTCH_H
+    int iterations[] = {10, 100, 1000, 2000, 3000};
+    #else
     int iterations[] = {10, 100, 1000, 10000, 100000};
+    #endif
     int iteration;
     int rnd;
     string tempStr;
     vector<string> randomStrings;
     vector<int> randomValues;
-    ofstream output("Results.csv");
+
     // for HashTable
     stringstream add;
     stringstream get;
@@ -50,7 +54,13 @@ int main() {
     search << "HopHash Table Search,";
     deleteh << "HopHash Table Delete,";
 
+    #ifdef HOPSCOTCH_H
+    ofstream output("HashTable_vs_Hopscotch.csv");
+    output << "Test Name,10,100,1000,2000,3000" << endl;
+    #else
+    ofstream output("Results.csv");
     output << "Test Name,10,100,1000,10000,100000" << endl;
+    #endif
 
     // pre-test. Generate random data.
     cout << "Generating random data." << endl;
@@ -140,9 +150,12 @@ int main() {
     output << add.str() << endl;
     output << get.str() << endl;
     output << remove.str() << endl;
+
+    #ifdef HOPSCOTCH_H
     output << insert.str() << endl;
     output << search.str() << endl;
     output << deleteh.str() << endl;
+    #endif
 
     output.close();
 

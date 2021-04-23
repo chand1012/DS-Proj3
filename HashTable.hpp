@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <limits>
 
 using std::string;
 using std::vector;
@@ -8,8 +9,8 @@ using std::vector;
 class HashTable {
     private:
         struct HashNode {
-            string key;
-            int value;
+            string key = "";
+            int value = std::numeric_limits<int>::min();
         };
         int hashKey(string);
         size_t rows = 0;
