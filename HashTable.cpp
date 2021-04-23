@@ -45,7 +45,7 @@ bool HashTable::remove(string key) {
     int hash = hashKey(key);
 
     if (hash > rows) {
-        return std::numeric_limits<int>::min();
+        return false;
     }
     
     vector<HashNode>& values = table.at(hash);
