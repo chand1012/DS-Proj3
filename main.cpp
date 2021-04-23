@@ -11,7 +11,7 @@
 #include "HashTable.hpp"
 #include "helpers.hpp"
 
-#include "Hopscotch.h"
+//#include "Hopscotch.h"
 
 using namespace std;
 
