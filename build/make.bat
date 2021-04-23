@@ -1,1 +1,1 @@
-msbuild DS-Proj3.sln /property:Configuration=Release 
+msbuild DS-Proj3.sln

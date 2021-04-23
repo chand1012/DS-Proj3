@@ -43,3 +43,4 @@ build/
 .history
 .ionide
 Hopscotch.*
+*.csv
