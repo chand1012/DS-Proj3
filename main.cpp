@@ -64,7 +64,11 @@ int main() {
 
     // pre-test. Generate random data.
     cout << "Generating random data." << endl;
+    #ifdef HOPSCOTCH_H
+    for (int i = 0; i < 3000; ++i) {
+    #else
     for (int i = 0; i < 100000; ++i) {
+    #endif
         // generate 100,000 random strings to test with
         // string length between 2 and 100
         rnd = randint(2, 100);
